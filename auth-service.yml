@@ -1,0 +1,28 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_wallet_db
+    username: postgres
+    password: Database@1074
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+jwt:
+  secret: "6f3e12a26b1f57a873d4386f06c9e41f9b5a0ed86f1a1b231aa9e19b01345d11"
+  expiration: 86400000   # 1 day
