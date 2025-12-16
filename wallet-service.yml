@@ -5,6 +5,17 @@ spring:
   application:
     name: wallet-service
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_wallet_db
+    username: postgres
+    password: Database@1074
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
 eureka:
   client:
     service-url:
