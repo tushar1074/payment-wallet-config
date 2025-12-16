@@ -1,0 +1,67 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # ---------------- AUTH SERVICE ----------------
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/auth/**
+
+
+        # ---------------- USER SERVICE ----------------
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - name: JwtAuthenticationFilter
+
+        # ---------------- WALLET SERVICE ----------------
+        - id: wallet-service
+          uri: lb://wallet-service
+          predicates:
+            - Path=/api/wallet/**
+          filters:
+            - name: JwtAuthenticationFilter
+
+
+        # ---------------- TRANSACTION SERVICE ----------------
+        - id: transaction-service
+          uri: lb://transaction-service
+          predicates:
+            - Path=/api/transaction/**
+          filters:
+            - name: JwtAuthenticationFilter
+
+        # ---------------- NOTIFICATION SERVICE ----------------
+
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/notification/**
+          filters:
+            - name: JwtAuthenticationFilter
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+
+jwt:
+  secret: "6f3e12a26b1f57a873d4386f06c9e41f9b5a0ed86f1a1b231aa9e19b01345d11"
+  expiration: 86400000   # 1 day
