@@ -5,6 +5,9 @@ spring:
   application:
     name: api-gateway
 
+  config:
+    import: optional:configserver:http://config-server:8888
+
   cloud:
     gateway:
       discovery:
@@ -17,7 +20,6 @@ spring:
           uri: lb://auth-service
           predicates:
             - Path=/api/auth/**
-
 
         # ---------------- USER SERVICE ----------------
         - id: user-service
@@ -35,7 +37,6 @@ spring:
           filters:
             - name: JwtAuthenticationFilter
 
-
         # ---------------- TRANSACTION SERVICE ----------------
         - id: transaction-service
           uri: lb://transaction-service
@@ -45,7 +46,6 @@ spring:
             - name: JwtAuthenticationFilter
 
         # ---------------- NOTIFICATION SERVICE ----------------
-
         - id: notification-service
           uri: lb://notification-service
           predicates:
@@ -53,14 +53,12 @@ spring:
           filters:
             - name: JwtAuthenticationFilter
 
-
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
-
+      defaultZone: http://eureka-server:8761/eureka/
 
 jwt:
   secret: "6f3e12a26b1f57a873d4386f06c9e41f9b5a0ed86f1a1b231aa9e19b01345d11"
