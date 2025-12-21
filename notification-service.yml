@@ -6,14 +6,14 @@ spring:
     name: notification-service
 
   kafka:
-    bootstrap-servers: localhost:9092   # VERY IMPORTANT
+    bootstrap-servers: kafka:9092
     consumer:
-      group-id: notification-service     # unique group for your listener
+      group-id: notification-group
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: "*"
+    properties:
+      spring.json.trusted.packages: "*"
 
 eureka:
   client:
